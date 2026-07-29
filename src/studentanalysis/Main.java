@@ -1,23 +1,31 @@
 package studentanalysis;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        Student john = new Student("John", 21, 73.8, false, true);
-        Student emma = new Student("Emma", 19, 91.4, true, true);
-        Student michael = new Student("Michael", 27, 58.2, true, true);
-        Student sophia = new Student("Sophia", 24, 39.7, false, false);
-        Student daniel = new Student("Daniel", 30, 84.9, true, true);
+        List<Student> students = createStudentData();
 
-        ArrayList<Student> students = new ArrayList<>();
+        System.out.println("=================================");
+        System.out.println("      STUDENT STREAM ANALYZER   ");
+        System.out.println("=================================");
+        System.out.println("Students loaded: " + students.size());
 
-        students.add(john);
-        students.add(emma);
-        students.add(michael);
-        students.add(sophia);
-        students.add(daniel);
+    }
 
+    private static List<Student> createStudentData() {
+        List<Student> students = new ArrayList<>();
+
+        students.add(new Student("John", 21, 73.8, false, true));
+        students.add(new Student("Emma", 19, 91.4, true, true));
+        students.add(new Student("Michael", 27, 58.2, true, true));
+        students.add(new Student ("Sophia", 24, 39.7, false, false));
+        students.add(new Student("Daniel", 30, 84.9, true, true));
+
+        return students;
 
     }
 }

@@ -9,10 +9,14 @@ public class Main {
     public static void main(String[] args) {
         List<Student> students = createStudentData();
 
-        System.out.println("=================================");
+        StudentReportGenerator reportGenerator = new StudentReportGenerator(students);
+
+        /*System.out.println("=================================");
         System.out.println("      STUDENT STREAM ANALYZER   ");
         System.out.println("=================================");
-        System.out.println("Students loaded: " + students.size());
+        System.out.println("Students loaded: " + students.size());*/
+
+        reportGenerator.printAllStudents();
 
     }
 

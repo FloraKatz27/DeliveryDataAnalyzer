@@ -18,6 +18,11 @@ public class Main {
 
         reportGenerator.printAllStudents();
 
+        List<Student> partTimeStudents = reportGenerator.getPartTimeStudents();
+
+        System.out.println("\n====== PART-TIME STUDENTS ======");
+        partTimeStudents.forEach(System.out::println);
+
     }
 
     private static List<Student> createStudentData() {

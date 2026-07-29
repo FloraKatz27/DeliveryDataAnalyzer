@@ -12,4 +12,14 @@ public class StudentReportGenerator {
 
         students.forEach(System.out::println);
     }
+
+    /*public void printPartTimeStudents() {
+        System.out.println("\n====== PART-TIME STUDENTS ======");
+
+        students.stream().filter(Student::isPartTime).forEach(System.out::println);
+    }*/
+
+    public List<Student> getPartTimeStudents() {
+        return students.stream().filter(Student::isPartTime).toList();
+    }
 }

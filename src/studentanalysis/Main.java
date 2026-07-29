@@ -23,6 +23,10 @@ public class Main {
         System.out.println("\n====== PART-TIME STUDENTS ======");
         partTimeStudents.forEach(System.out::println);
 
+        System.out.println();
+
+        reportGenerator.printHonorRoll();
+
     }
 
     private static List<Student> createStudentData() {

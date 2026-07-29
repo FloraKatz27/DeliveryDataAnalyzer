@@ -22,4 +22,10 @@ public class StudentReportGenerator {
     public List<Student> getPartTimeStudents() {
         return students.stream().filter(Student::isPartTime).toList();
     }
+
+    public void printHonorRoll() {
+        System.out.println("====== HONOR ROLL ======");
+
+        students.stream().filter(student -> student.getAverageGrade() >= 80).map(Student::getName).sorted().forEach(System.out::println);
+    }
 }

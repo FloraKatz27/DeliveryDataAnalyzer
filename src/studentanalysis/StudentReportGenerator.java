@@ -1,5 +1,8 @@
 package studentanalysis;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Predicate;
 
 public class StudentReportGenerator {
     private final List<Student> students;
@@ -27,5 +30,62 @@ public class StudentReportGenerator {
         System.out.println("====== HONOR ROLL ======");
 
         students.stream().filter(student -> student.getAverageGrade() >= 80).map(Student::getName).sorted().forEach(System.out::println);
+    }
+
+    private int countTotalStudents() {
+        return students.size();
+    }
+
+    public void printStatistics() {
+        System.out.println("\n====== STUDENT STATISTICS ======");
+
+        System.out.println("Total Students: " + countTotalStudents());
+        System.out.println("Passed Students: " + countPassedStudents());
+        System.out.println("Failed Students: " + countFailedStudents());
+        System.out.println("Part-Time Students: " + countPartTimeStudents());
+        System.out.println("Full-Time Students: " + countFullTimeStudents());
+    }
+
+    private long countStudentsMatching(Predicate<Student> condition) {
+        return students.stream().filter(condition).count();
+    }
+
+    private long countPassedStudents() {
+        //return students.stream().filter(Student::isPassed).count();
+        return countStudentsMatching(Student::isPassed);
+    }
+
+    private long countFailedStudents() {
+        //return students.stream().filter(student -> !student.isPassed()).count();
+        return countStudentsMatching(student -> !student.isPassed());
+    }
+
+    private long countPartTimeStudents() {
+        //return students.stream().filter(Student::isPartTime).count();
+        return countStudentsMatching(Student::isPartTime);
+    }
+
+    private long countFullTimeStudents() {
+        //return students.stream().filter(student -> !student.isPartTime()).count();
+        return countStudentsMatching(student -> !student.isPartTime());
+    }
+
+    public void printTopPerformingStudent() {
+       Optional<Student> topStudent = students.stream().max(Comparator.comparingDouble(Student::getAverageGrade));
+
+        System.out.println("\n====== TOP-PERFORMING STUDENT ======");
+
+       if (topStudent.isPresent()) {
+           Student student = topStudent.get();
+           System.out.println(student.getName() + " - " + student.getAverageGrade());
+       } else {
+           System.out.println("No students found.");
+       }
+    }
+
+    public void printStudentsAlphabetically() {
+
+        System.out.println("n====== STUDENTS (A-Z) ======");
+        students.stream().sorted(Comparator.comparing(Student::getName)).forEach(System.out::println);
     }
 }

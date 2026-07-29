@@ -27,6 +27,12 @@ public class Main {
 
         reportGenerator.printHonorRoll();
 
+        reportGenerator.printStatistics();
+
+        System.out.println();
+
+        reportGenerator.printStudentsAlphabetically();
+
     }
 
     private static List<Student> createStudentData() {

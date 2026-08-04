@@ -47,4 +47,6 @@ public class Main {
         return students;
 
     }
+
+    reportGenerator.searchStudentByName("Emma");
 }

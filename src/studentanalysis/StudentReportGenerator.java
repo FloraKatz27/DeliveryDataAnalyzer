@@ -88,4 +88,18 @@ public class StudentReportGenerator {
         System.out.println("n====== STUDENTS (A-Z) ======");
         students.stream().sorted(Comparator.comparing(Student::getName)).forEach(System.out::println);
     }
+
+    public void searchStudentByName(String name) {
+        Optional<Student> foundStudent = students.stream().filter(student -> student.getName().equals(name)).findFirst();
+
+        System.out.println("\n====== SEARCH RESULT ======");
+
+        if (foundStudent.isPresent()) {
+            Student student = foundStudent.get();
+
+            System.out.println(student.getName() + " - " + student.getAverageGrade());
+        } else {
+            System.out.println("No student found matching that name.");
+        }
+    }
 }

@@ -36,6 +36,10 @@ public class StudentReportGenerator {
         return students.size();
     }
 
+    private double calculateTotalGrades() {
+       return students.stream().mapToDouble(Student::getAverageGrade).sum();
+    }
+
     public void printStatistics() {
         System.out.println("\n====== STUDENT STATISTICS ======");
 
@@ -44,6 +48,7 @@ public class StudentReportGenerator {
         System.out.println("Failed Students: " + countFailedStudents());
         System.out.println("Part-Time Students: " + countPartTimeStudents());
         System.out.println("Full-Time Students: " + countFullTimeStudents());
+        System.out.println("Average grade (all students): " + calculateAverageGrade());
     }
 
     private long countStudentsMatching(Predicate<Student> condition) {
@@ -68,6 +73,14 @@ public class StudentReportGenerator {
     private long countFullTimeStudents() {
         //return students.stream().filter(student -> !student.isPartTime()).count();
         return countStudentsMatching(student -> !student.isPartTime());
+    }
+
+    private double calculateAverageGrade() {
+        if (countTotalStudents() == 0) {
+            return 0.0;
+        }
+
+        return calculateTotalGrades() / countTotalStudents();
     }
 
     public void printTopPerformingStudent() {

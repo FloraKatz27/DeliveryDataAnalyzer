@@ -33,6 +33,8 @@ public class Main {
 
         reportGenerator.printStudentsAlphabetically();
 
+        reportGenerator.searchStudentByName("Emma");
+
     }
 
     private static List<Student> createStudentData() {
@@ -47,6 +49,4 @@ public class Main {
         return students;
 
     }
-
-    reportGenerator.searchStudentByName("Emma");
 }

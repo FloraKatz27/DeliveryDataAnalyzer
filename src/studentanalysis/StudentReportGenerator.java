@@ -181,4 +181,14 @@ public class StudentReportGenerator {
 
         System.out.println("Average grade: " + calculateAverageGrade(Student::isPartTime));
     }
+
+    public void printStudentsAboveGrade(double minimumGrade) {
+        if (minimumGrade < 0 || minimumGrade > 100) {
+            throw new IllegalArgumentException("Grade must be between 0 and 100.");
+        }
+
+        System.out.println("\n====== STUDENTS WITH GRADE " + minimumGrade + " OR HIGHER ======");
+
+        students.stream().filter(student -> student.getAverageGrade() >= minimumGrade).forEach(student -> System.out.println(student.getName() + " - " + student.getAverageGrade()));
+    }
 }

@@ -43,6 +43,8 @@ public class Main {
 
         reportGenerator.printPartTimeStatistics();
 
+        reportGenerator.printStudentsAboveGrade(70.0);
+
     }
 
     private static List<Student> createStudentData() {

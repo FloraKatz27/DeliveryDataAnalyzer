@@ -37,8 +37,14 @@ public class StudentReportGenerator {
     }
 
     private double calculateTotalGrades() {
-       return students.stream().mapToDouble(Student::getAverageGrade).sum();
+        return calculateTotalGrades(student -> true);
     }
+
+    private double calculateTotalGrades(Predicate<Student> condition) {
+       return students.stream().filter(condition).mapToDouble(Student::getAverageGrade).sum();
+    }
+
+
 
     public void printStatistics() {
         System.out.println("\n====== STUDENT STATISTICS ======");
@@ -76,24 +82,68 @@ public class StudentReportGenerator {
     }
 
     private double calculateAverageGrade() {
-        if (countTotalStudents() == 0) {
+        return calculateAverageGrade(student -> true);
+    }
+
+    private double calculateAverageGrade(Predicate<Student> condition) {
+        long matchingStudents = countStudentsMatching(condition);
+
+        if (matchingStudents == 0) {
             return 0.0;
         }
 
-        return calculateTotalGrades() / countTotalStudents();
+        return calculateTotalGrades(condition) / matchingStudents;
+    }
+
+    private void printStudent(Optional<Student> studentOptional, String title) {
+        System.out.println("\n====== " + title + " ======");
+
+        if (studentOptional.isPresent()) {
+            Student student = studentOptional.get();
+
+            System.out.println(student.getName() + " - " + student.getAverageGrade());
+        } else {
+            System.out.println("No students found.");
+        }
     }
 
     public void printTopPerformingStudent() {
        Optional<Student> topStudent = students.stream().max(Comparator.comparingDouble(Student::getAverageGrade));
 
-        System.out.println("\n====== TOP-PERFORMING STUDENT ======");
+        printStudent(topStudent, "TOP-PERFORMING STUDENT");
 
-       if (topStudent.isPresent()) {
+       /*if (topStudent.isPresent()) {
            Student student = topStudent.get();
            System.out.println(student.getName() + " - " + student.getAverageGrade());
        } else {
            System.out.println("No students found.");
-       }
+       }*/
+    }
+
+    public void printLowestPerformingStudent() {
+        Optional<Student> worstStudent = students.stream().min(Comparator.comparingDouble(Student::getAverageGrade));
+
+        printStudent(worstStudent, "LOWEST-PERFORMING STUDENT");
+
+        /*System.out.println("\n====== LOWEST-PERFORMING STUDENT ======");
+
+        if (worstStudent.isPresent()) {
+            Student student = worstStudent.get();
+            System.out.println(student.getName() + " - " + student.getAverageGrade());
+        } else {
+            System.out.println("No students found.");
+        }*/
+    }
+
+
+    public void printTopStudents(int numberOfStudents) {
+        if (numberOfStudents < 0) {
+            throw new IllegalArgumentException("Number of students cannot be negative.");
+        }
+
+        System.out.println("\n====== TOP " + numberOfStudents + " STUDENTS (by grade) ======");
+
+        students.stream().sorted(Comparator.comparingDouble(Student::getAverageGrade).reversed()).limit(numberOfStudents).forEach(student -> System.out.println(student.getName() + " - " + student.getAverageGrade()));
     }
 
     public void printStudentsAlphabetically() {
@@ -114,5 +164,21 @@ public class StudentReportGenerator {
         } else {
             System.out.println("No student found matching that name.");
         }
+    }
+
+    public void printStudentsByStatus() {
+        System.out.println("\n====== STUDENTS BY STATUS ======");
+
+        System.out.println("\nPASSED:");
+         students.stream().filter(Student::isPassed).forEach(student -> System.out.println(student.getName()));
+
+        System.out.println("\nFAILED:");
+        students.stream().filter(student -> !student.isPassed()).forEach(student -> System.out.println(student.getName()));
+    }
+
+    public void printPartTimeStatistics() {
+        System.out.println("\n====== PART-TIME STATISTICS ======");
+
+        System.out.println("Average grade: " + calculateAverageGrade(Student::isPartTime));
     }
 }

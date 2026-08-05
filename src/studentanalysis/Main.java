@@ -35,6 +35,14 @@ public class Main {
 
         reportGenerator.searchStudentByName("Emma");
 
+        reportGenerator.printTopStudents(3);
+
+        reportGenerator.printTopPerformingStudent();
+
+        reportGenerator.printLowestPerformingStudent();
+
+        reportGenerator.printPartTimeStatistics();
+
     }
 
     private static List<Student> createStudentData() {
